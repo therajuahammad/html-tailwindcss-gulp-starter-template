@@ -2,7 +2,7 @@
 
 ## Usage
 
-1. Install Dev Dependencies
+1. Install Dependencies Packages
 
 ```sh
 npm install // or yarn install
