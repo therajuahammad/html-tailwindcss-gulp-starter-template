@@ -53,19 +53,31 @@ function devStyles() {
         .pipe(dest(options.paths.dist.css));
 }
 
+// function devScripts() {
+//     return src([
+//         `${options.paths.src.js}/libs/**/*.js`,
+//         `${options.paths.src.js}/**/*.js`,
+//         `!${options.paths.src.js}/**/external/*`,
+//     ])
+//         .pipe(concat({path: "scripts.js"}))
+//         .pipe(dest(options.paths.dist.js));
+// }
+
 function devScripts() {
     return src([
-        `${options.paths.src.js}/libs/**/*.js`,
         `${options.paths.src.js}/**/*.js`,
-        `!${options.paths.src.js}/**/external/*`,
-    ])
-        .pipe(concat({path: "scripts.js"}))
-        .pipe(dest(options.paths.dist.js));
+    ]).pipe(dest(options.paths.dist.js));
 }
 
 function devImages() {
     return src(`${options.paths.src.img}/**/*`).pipe(
         dest(options.paths.dist.img)
+    );
+}
+
+function devCSSLib() {
+    return src(`${options.paths.src.cssLib}/**/*`).pipe(
+        dest(options.paths.dist.cssLib)
     );
 }
 
@@ -80,6 +92,7 @@ function watchFiles() {
     );
     watch(`${options.paths.src.js}/**/*.js`, series(devScripts, previewReload));
     watch(`${options.paths.src.img}/**/*`, series(devImages, previewReload));
+    watch(`${options.paths.src.cssLib}/**/*`, series(devCSSLib, previewReload));
     console.log("\n\t" + logSymbols.info, "Watching for Changes..\n");
 }
 
@@ -149,7 +162,7 @@ function buildFinish(done) {
 
 exports.default = series(
     devClean, // Clean Dist Folder
-    parallel(devStyles, devScripts, devImages, devHTML), //Run All tasks in parallel
+    parallel(devStyles, devScripts, devImages, devCSSLib, devHTML), //Run All tasks in parallel
     livePreview, // Live Preview Build
     watchFiles // Watch for Live Changes
 );

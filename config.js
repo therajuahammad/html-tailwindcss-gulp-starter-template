@@ -8,12 +8,14 @@ module.exports = {
     src: {
       base: "./src",
       css: "./src/css",
+      cssLib: "./src/css/lib",
       js: "./src/js",
       img: "./src/img",
     },
     dist: {
       base: "./dist",
       css: "./dist/css",
+      cssLib: "./dist/css/lib",
       js: "./dist/js",
       img: "./dist/img",
     },
